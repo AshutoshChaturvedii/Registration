@@ -1,0 +1,70 @@
+<mat-toolbar>
+    <span>Registration</span>
+  </mat-toolbar>
+  <mat-card class="my-card">
+     <mat-card-content>
+        <form class="my-form" form [formGroup]="ownerForm" novalidate (ngSubmit)="Register(ownerForm.value)">  
+           <mat-form-field class="full-width">
+              <mat-label>First Name*</mat-label>
+              <input  matInput type="text" placeholder="First name"   formControlName="name" id="name"  ng-pattern="/^[a-zA-Z\s]*$/">
+              <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+              <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+              <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
+              <mat-error *ngIf="hasError('name','pattern')">Only alphabets are allowed</mat-error>
+           </mat-form-field>
+           <mat-form-field class="full-width">
+              <mat-label>Last Name*</mat-label>
+              <input  matInput type="text" placeholder="Last Name" formControlName="lname" id="lname" ng-pattern="/^[a-zA-Z\s]*$/">
+              <mat-error *ngIf="hasError('lname', 'required')">Last Name is required</mat-error>
+              <mat-error *ngIf="hasError('lname','pattern')">Only alphabets are allowed</mat-error>
+           </mat-form-field>
+           <mat-form-field class="full-width">
+              <mat-label>Address*</mat-label>
+              <input  matInput type="text" placeholder="Address"   formControlName="address" id="address">
+              <mat-error *ngIf="hasError('address', 'required')">Address  is required</mat-error>
+           </mat-form-field>
+           <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input  matInput type="text" placeholder="Email" formControlName="email" id="email" ng-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+              <mat-error *ngIf="hasError('email','pattern')">Invalid email</mat-error>
+            </mat-form-field>
+           <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input  matInput type="password" placeholder="Password" formControlName="password"  name="password" id ="password">
+              <mat-error *ngIf="hasError('password', 'required')">Password  is required</mat-error>
+              <mat-error *ngIf="hasError('password', 'minlength')">Password must be at least 6 characters </mat-error>
+              <mat-error *ngIf="hasError('password', 'maxlength')">Password must be less then 10 chars</mat-error>
+           </mat-form-field>
+           <section class="example-section">
+            <label id="example-radio-group-label">Gender</label><br><br>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="radio-group" id="gender" name="gender"
+              formControlName="gender">
+              <mat-radio-button class="radio-button" 
+                *ngFor="let g of Genders" 
+                [value]="g" >
+                {{ g }}
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="hasError('gender','required')">Please choose a Gender</mat-error>
+           </section>
+           <mat-form-field class="full-width">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+           </mat-form-field>
+          
+             
+           <mat-checkbox class="example-margin" id="checkbox" name="checkbox" formControlName="checkbox"></mat-checkbox> &nbsp;<a (click)="openDialog()"><b><u>I agree to Terms and conditions</u></b></a>
+           <mat-error *ngIf="hasError('checkbox','required')">Please check the terms and conditions checkbox</mat-error>
+         </form>
+     </mat-card-content>
+     <mat-card-actions>
+        <button mat-raised-button  color="primary"  [disabled]="!ownerForm.valid">REGISTER</button>
+     </mat-card-actions>
+  </mat-card>
+
+
+
